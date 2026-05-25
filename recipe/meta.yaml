@@ -1,5 +1,5 @@
 {% set name = "opentelemetry-instrumentation-haystack" %}
-{% set version = "0.49.6" %}
+{% set version = "0.57.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,33 +7,35 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
-  sha256: 54eb274cbcf4381b9d476efc3203d87eb4a67e687497db47ec491e390390062c
+  sha256: 9d1abf8850777e8bd7005bed76c3f1909161f431eac41ccd7a47598df0b0bcce
 
 build:
   number: 0
   script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
-  skip: true  # [py<39]
+  skip: true  # [py<310]
 
 requirements:
   host:
     - pip
     - python
-    - poetry-core
+    - hatchling
   run:
     - python
     - opentelemetry-api >=1.38.0,<2.0.0
     - opentelemetry-instrumentation >=0.59b0
     - opentelemetry-semantic-conventions >=0.59b0
-    - opentelemetry-semantic-conventions-ai >=0.4.13,<0.5
-  run_constrained:
-    - haystack-ai >=2.0,<2.4
+    - opentelemetry-semantic-conventions-ai >=0.5.1,<0.6.0
 
-# Unable to run tests and check imports, cohere is not in the main channel.
+# Unable to run tests, haystack-ai has newer version with changes in API in the main channel.
 test:
+  imports:
+    - opentelemetry.instrumentation.haystack
   commands:
     - pip check
   requires:
     - pip
+    - haystack-ai
+    - haystack-experimental
 
 about:
   home: https://www.traceloop.com/openllmetry
