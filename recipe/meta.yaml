@@ -1,13 +1,13 @@
 {% set name = "opentelemetry-instrumentation-haystack" %}
-{% set version = "0.57.0" %}
+{% set version = "0.62.1" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}
   version: {{ version }}
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_')}}-{{ version }}.tar.gz
-  sha256: 9d1abf8850777e8bd7005bed76c3f1909161f431eac41ccd7a47598df0b0bcce
+  sha256: 0c8903738df83bf0b0ad1c4b1e46266bed8039a8c126552ef2c32fd695dff4bb
 
 build:
   number: 0
@@ -23,8 +23,8 @@ requirements:
     - python
     - opentelemetry-api >=1.38.0,<2.0.0
     - opentelemetry-instrumentation >=0.59b0
-    - opentelemetry-semantic-conventions >=0.59b0
     - opentelemetry-semantic-conventions-ai >=0.5.1,<0.6.0
+    - opentelemetry-semantic-conventions >=0.63b1
 
 # Unable to run tests, haystack-ai has newer version with changes in API in the main channel.
 test:
